@@ -19,18 +19,22 @@ class MeasureController {
         }
     }
 
-    async getById(req, resp, next) {
+    async get(req, resp, next) {
         try {
-            let { id } = await req.query;
+            let { id, courseId } = await req.query;
+            console.log(req.query);
             if (id) {
                 const measure = await Measure.findOne({ where: { id } });
+                return resp.json(measure)
+            }
+            if (courseId) {
+                const measure = await Measure.findAll({ where: { courseId } });
                 return resp.json(measure)
             }
             next(ApiError.internalError('Не вышло найти измерение'))
         } catch (error) {
             next(ApiError.internalError(error.message))
         }
-
     }
 }
 

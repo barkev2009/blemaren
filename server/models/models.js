@@ -38,7 +38,7 @@ const Measure = sequelize.define(
         measure_date: {type: DataTypes.DATE, allowNull: false},
         ph_level: {type: DataTypes.FLOAT, allowNull: false},
         day_time: {type: DataTypes.ENUM(MORNING, DAY, EVENING), allowNull: false},
-        pill_quantity: {type: DataTypes.INTEGER, allowNull: false}
+        pill_quantity: {type: DataTypes.FLOAT, allowNull: false}
     }
 )
 

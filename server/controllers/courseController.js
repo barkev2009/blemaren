@@ -4,9 +4,9 @@ const ApiError = require('../error/ApiError');
 class CourseController {
     async create(req, resp, next) {
         try {
-            const { start_date, end_date, course_status, user_id } = req.body;
+            const { start_date, end_date, course_status, userId } = req.body;
 
-            const course = await Course.create({ start_date, end_date, course_status, userId: user_id });
+            const course = await Course.create({ start_date, end_date, course_status, userId });
 
             return resp.json({ course })
         } catch (e) {
