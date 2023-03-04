@@ -1,4 +1,4 @@
-const { Measure, MeasureCycle } = require('../models/models');
+const { Measure, MeasureCycle, Cycle, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class MeasureController {
@@ -7,6 +7,7 @@ class MeasureController {
             const { measure_date, ph_level, day_time, pill_quantity, courseId, cycleId } = req.body;
 
             const measure = await Measure.create({ measure_date, ph_level, day_time, pill_quantity, courseId });
+            const course = await Course.findOne({where: {id: courseId}})
 
             if (cycleId) {
                 const measureCycle = MeasureCycle.create({measureId: measure.id, cycleId})

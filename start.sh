@@ -1,4 +1,3 @@
 #!/bin/bash
 
-cd server
-npm run dev
+bash start_client.sh & bash start_server.sh

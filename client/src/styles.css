@@ -30,6 +30,16 @@ code {
 }
 
 .measure_table_container {
-  width: 40vw;
+  /* width: 40vw; */
   padding: 10px;
+}
+
+.date_flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.date_flex > div {
+  padding: 0 10px;
 }

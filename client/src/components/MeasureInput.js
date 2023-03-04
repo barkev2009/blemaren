@@ -17,7 +17,7 @@ const MeasureInput = () => {
         axios.post(
             'http://localhost:5000/api/measure/',
             {
-                measure_date: String(measureDate.getFullYear()) + '-' + String(measureDate.getMonth() + 1).padStart(2, '0') + '-' + String(measureDate.getDate()).padStart(2, '0'),
+                measure_date: measureDate.toISOString().slice(0, 10),
                 ph_level: phLevel,
                 pill_quantity: pillQuantity,
                 day_time: Object.keys(enums).filter(item => enums[item] === dayTime)[0],
@@ -31,12 +31,7 @@ const MeasureInput = () => {
             <form>
                 <div className="form-group">
                     <label htmlFor="dateInput">Дата измерения</label>
-                    <input disabled type="text" className="form-control" id="dateInput"
-                        value={
-                            String(measureDate.getDate()).padStart(2, '0') + '.'
-                            + String(measureDate.getMonth() + 1).padStart(2, '0') + '.'
-                            + String(measureDate.getFullYear())
-                        } />
+                    <input disabled type="text" className="form-control" id="dateInput" value={measureDate.toLocaleDateString()} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="dayTime">Время дня</label>
@@ -55,7 +50,7 @@ const MeasureInput = () => {
                     <input type="number" className="form-control" id="pillQuantity" min={0} max={5} step={0.5} onChange={e => setPillQuantity(e.target.value)} value={pillQuantity}/>
                 </div>
             </form>
-            <button type="button" className="btn btn-primary mt-4" onClick={buttonHandler}>Отправить измерение</button>
+            <button type="button" className="btn btn-primary mt-4" onClick={buttonHandler}>Добавить измерение</button>
         </div>
     )
 }
