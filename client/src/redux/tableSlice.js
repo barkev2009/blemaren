@@ -11,7 +11,7 @@ export const getMeasures = createAsyncThunk(
 
 const measureSlice = createSlice({
   name: 'measures',
-  initialState: { raw: [], dateSplitData: [] },
+  initialState: { raw: [], structuredData: [] },
   reducers: {
     addYearGroup(state, action) {
       state[action.payload.date] = action.payload.data
@@ -20,16 +20,32 @@ const measureSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getMeasures.fulfilled, (state, action) => {
       state.raw.length = 0;
-      state.dateSplitData.length = 0;
+      state.structuredData.length = 0;
       state.raw.push(...action.payload);
-      const dates = [... new Set(action.payload.map(item => new Date(item.measure_date).toLocaleDateString()))];
-      dates.forEach(
-        date => state.dateSplitData.push(
-          {
-            date,
-            data: action.payload.filter(item => new Date(item.measure_date).toLocaleDateString() === date)
-          }
-        ))
+
+      const cycles = [... new Set(action.payload.map(item => item.cycle))];
+
+      cycles.forEach(
+        cycle => {
+          let dates = [... new Set(action.payload.filter(item => item.cycle === cycle).map(
+            item => new Date(item.measure_date).toLocaleDateString()
+          ))];
+          state.structuredData.push(
+            {
+              cycle,
+              cycleData: dates.map(
+                date => ({
+                  date,
+                  data: action.payload.filter(
+                    item => new Date(item.measure_date).toLocaleDateString() === date
+                      & item.cycle === cycle
+                  )
+                })
+              )
+            }
+          )
+        }
+      );
     })
   }
 })

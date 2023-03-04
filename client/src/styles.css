@@ -32,6 +32,12 @@ code {
 .measure_table_container {
   /* width: 40vw; */
   padding: 10px;
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+.measure_table_container::-webkit-scrollbar {
+  display: none;
 }
 
 .date_flex {
@@ -42,4 +48,22 @@ code {
 
 .date_flex > div {
   padding: 0 10px;
+}
+
+.morning_col {
+  width: 55.5px;
+}
+
+.day_col {
+  width: 58.13px;
+}
+
+.evening_col {
+  width: 65.61px;
+}
+
+.alert {
+  height: 40px;
+  padding: 5px;
+  margin: auto;
 }

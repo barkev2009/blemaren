@@ -11,8 +11,8 @@ const DateContainer = ({ dateData }) => {
                     <div>Уровень pH</div>
                     <div>Количество таблеток</div>
                 </div>
-                {dateData.data.map(item =>
-                    <div>
+                {dateData.data.map((item, idx) =>
+                    <div key={idx}>
                         <h6>{enums[item.day_time]}</h6>
                         <div>{item.ph_level}</div>
                         <div>{item.pill_quantity}</div>

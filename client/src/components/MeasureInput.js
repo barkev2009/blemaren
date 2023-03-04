@@ -8,7 +8,9 @@ const MeasureInput = () => {
 
     const [measureDate, setMeasureDate] = useState(new Date());
     const [phLevel, setPhLevel] = useState(5);
-    const [dayTime, setDayTime] = useState(enums.MORNING);
+    const [dayTime, setDayTime] = useState(
+        new Date().getHours() < 10 ? enums.MORNING : new Date().getHours() > 16 ? enums.EVENING : enums.DAY
+    );
     const [pillQuantity, setPillQuantity] = useState(0);
 
     const dispatch = useDispatch();

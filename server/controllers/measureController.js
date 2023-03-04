@@ -1,4 +1,4 @@
-const { Measure, MeasureCycle, Cycle, Course } = require('../models/models');
+const { Measure, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class MeasureController {
@@ -6,13 +6,11 @@ class MeasureController {
         try {
             const { measure_date, ph_level, day_time, pill_quantity, courseId, cycleId } = req.body;
 
-            const measure = await Measure.create({ measure_date, ph_level, day_time, pill_quantity, courseId });
-            const course = await Course.findOne({where: {id: courseId}})
+            const course = await Course.findOne({where: {id: courseId}});
 
-            if (cycleId) {
-                const measureCycle = MeasureCycle.create({measureId: measure.id, cycleId})
-                return resp.json({ measure, measureCycle })
-            }
+            const startDate = course.start_date;
+            const cycle = Math.floor((new Date(measure_date) - startDate) / (1000 * 60 * 60 * 24 * 3));
+            const measure = await Measure.create({ measure_date, ph_level, day_time, pill_quantity, courseId, cycle });
 
             return resp.json({ measure })
         } catch (e) {

@@ -1,24 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {getMeasures, addYearGroup} from './../redux/tableSlice';
-import SimpleContainer from './containers/SimpleContainer';
-import DateContainer from './containers/DateContainer';
+import CycleContainer from './containers/CycleContainer'
 
 const MeasureTable = () => {
 
     const dispatch = useDispatch();
     const measures = useSelector(state => state.measures.raw);
-    const dateSplitData = useSelector(state => state.measures.dateSplitData);
+    const dateSplitData = useSelector(state => state.measures.structuredData);
 
     useEffect(
         () => {
             dispatch(getMeasures())
-            // dispatch(addYearGroup({date: '2023-04-04', data: {a: 1}}))
         }, []
     );
 
   return (
-    <div className='measure_table_container'>{dateSplitData.map(item => <DateContainer dateData={item}/>)}</div>
+    <div className='measure_table_container'>{dateSplitData.map(item => <CycleContainer key={`cycle_${item.cycle}`} cycle={item.cycle} cycleData={item.cycleData}/>)}</div>
   )
 }
 
