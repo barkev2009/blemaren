@@ -19,7 +19,7 @@ const MeasureInput = () => {
         axios.post(
             'http://localhost:5000/api/measure/',
             {
-                measure_date: measureDate.toISOString().slice(0, 10),
+                measure_date: measureDate,
                 ph_level: phLevel,
                 pill_quantity: pillQuantity,
                 day_time: Object.keys(enums).filter(item => enums[item] === dayTime)[0],
