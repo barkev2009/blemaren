@@ -4,7 +4,7 @@ import DateContainer from './DateContainer'
 
 const CycleContainer = ({cycleData, cycle}) => {
   return (
-    <div style={{border: '1px solid black'}}>
+    <div className='cycle_container'>
         {cycleData.map(
             (item, idx) => <DateContainer key={idx} dateData={item} />
         )}

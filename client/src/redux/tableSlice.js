@@ -1,10 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { enums } from './../enums'
 
 export const getMeasures = createAsyncThunk(
   'measures/GET_MEASURES',
   async () => {
     const response = await axios.get('http://localhost:5000/api/measure/', { params: { courseId: 6 } })
+    return response.data
+  }
+)
+export const createMeasure = createAsyncThunk(
+  'measures/CREATE_MEASURE',
+  async (measureData) => {
+    const response = await axios.post(`http://localhost:5000/api/measure/`, measureData)
     return response.data
   }
 )
@@ -15,6 +23,12 @@ export const deleteMeasure = createAsyncThunk(
     return response.data
   }
 )
+
+const sortBy = Object.keys(enums);
+export const sortByObject = sortBy.reduce((a, c, i) => {
+  a[c] = i
+  return a
+}, {})
 
 const measureSlice = createSlice({
   name: 'measures',
@@ -30,7 +44,7 @@ const measureSlice = createSlice({
       state.structuredData.length = 0;
       state.raw.push(...action.payload);
 
-      const cycles = [... new Set(action.payload.map(item => item.cycle))];
+      const cycles = [... new Set(action.payload.map(item => item.cycle))].reverse();
 
       cycles.forEach(
         cycle => {
@@ -46,27 +60,67 @@ const measureSlice = createSlice({
                   data: action.payload.filter(
                     item => new Date(item.measure_date).toLocaleDateString() === date
                       & item.cycle === cycle
-                  )
+                  ).sort((a, b) => sortByObject[a.day_time] - sortByObject[b.day_time])
                 })
-              )
+              ).sort((a, b) => new Date(a.date) - new Date(b.date))
             }
           )
         }
       );
     });
     builder.addCase(deleteMeasure.fulfilled, (state, action) => {
-      if (action.payload.message === 1) {
+      if (action.payload.result === 1) {
+
+        const measure = action.payload.measure;
         state.chosenMeasure = null;
-        state.raw = state.raw.filter(item => Number(item.id) !== Number(action.payload.id));
-        state.structuredData.forEach(
-          cycleItem => {
-            cycleItem.cycleData.forEach(
-              item => {
-                item.data = item.data.filter(dataItem => Number(dataItem.id) !== Number(action.payload.id))
+        state.raw = state.raw.filter(item => Number(item.id) !== Number(measure.id));
+
+        const cycle = state.structuredData.filter(item => Number(item.cycle) === Number(measure.cycle))[0];
+        const dateItem = cycle.cycleData.filter(item => item.date === new Date(measure.measure_date).toLocaleDateString())[0];
+
+        dateItem.data = dateItem.data.filter(item => Number(item.id) !== Number(measure.id));
+        if (dateItem.data.length === 0) {
+          cycle.cycleData = cycle.cycleData.filter(item => item.date !== new Date(measure.measure_date).toLocaleDateString());
+        }
+        if (cycle.cycleData.length === 0) {
+          state.structuredData = state.structuredData.filter(item => Number(item.cycle) !== Number(measure.cycle));
+        }
+      }
+    }
+    );
+    builder.addCase(createMeasure.fulfilled, (state, action) => {
+      const measure = action.payload.measure;
+      if (measure) {
+        state.raw.push(measure);
+
+        const cycle = state.structuredData.filter(item => Number(item.cycle) === Number(measure.cycle))[0];
+        if (cycle) {
+          const dateItem = cycle.cycleData.filter(item => item.date === new Date(measure.measure_date).toLocaleDateString())[0];
+          if (dateItem) {
+            dateItem.data.push(measure);
+            dateItem.data.sort((a, b) => sortByObject[a.day_time] - sortByObject[b.day_time])
+          } else {
+            const data = [measure]
+            cycle.cycleData.push(
+              {
+                date: new Date(measure.measure_date).toLocaleDateString(),
+                data
               }
             )
           }
-        )
+        } else {
+          state.structuredData.unshift(
+            {
+              cycle: measure.cycle,
+              cycleData: [
+                {
+                  date: new Date(measure.measure_date).toLocaleDateString(),
+                  data: [measure]
+                }
+              ]
+            }
+          )
+        }
       }
     }
     )

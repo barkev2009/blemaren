@@ -22,7 +22,7 @@ const MeasureTable = () => {
 
   return (
     <div>
-      <button type="button" className="btn btn-danger" disabled={chosenMeasure === null} onClick={deleteHandler}>Удалить измерение</button>
+      <button type="button" className="btn btn-outline-danger" disabled={chosenMeasure === null} onClick={deleteHandler}><i className="bi bi-trash"></i>{`  Удалить измерение`}</button>
       <div className='measure_table_container'>{dateSplitData.map(item => <CycleContainer key={`cycle_${item.cycle}`} cycle={item.cycle} cycleData={item.cycleData} />)}</div>
     </div>
 

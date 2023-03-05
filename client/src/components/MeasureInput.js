@@ -1,23 +1,22 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {enums} from '../enums'
-import {getMeasures} from './../redux/tableSlice';
+import { enums } from '../enums'
+import { getMeasures, createMeasure } from './../redux/tableSlice';
 
 const MeasureInput = () => {
 
     const [measureDate, setMeasureDate] = useState(new Date());
     const [phLevel, setPhLevel] = useState(5);
     const [dayTime, setDayTime] = useState(
-        new Date().getHours() < 10 ? enums.MORNING : new Date().getHours() > 16 ? enums.EVENING : enums.DAY
+        new Date().getHours() < 10 ? enums.MORNING : (new Date().getHours() > 16 ? enums.EVENING : enums.DAY)
     );
     const [pillQuantity, setPillQuantity] = useState(0);
 
     const dispatch = useDispatch();
 
     const buttonHandler = () => {
-        axios.post(
-            'http://localhost:5000/api/measure/',
+        dispatch(createMeasure(
             {
                 measure_date: measureDate,
                 ph_level: phLevel,
@@ -25,7 +24,7 @@ const MeasureInput = () => {
                 day_time: Object.keys(enums).filter(item => enums[item] === dayTime)[0],
                 courseId: 6
             }
-        ).then(resp => dispatch(getMeasures()))
+        ))
     }
 
     return (
@@ -49,10 +48,10 @@ const MeasureInput = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="pillQuantity">Количество таблеток</label>
-                    <input type="number" className="form-control" id="pillQuantity" min={0} max={5} step={0.5} onChange={e => setPillQuantity(e.target.value)} value={pillQuantity}/>
+                    <input type="number" className="form-control" id="pillQuantity" min={0} max={5} step={0.5} onChange={e => setPillQuantity(e.target.value)} value={pillQuantity} />
                 </div>
             </form>
-            <button type="button" className="btn btn-primary mt-4" onClick={buttonHandler}>Добавить измерение</button>
+            <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
         </div>
     )
 }

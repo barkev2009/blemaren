@@ -22,10 +22,11 @@ code {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .measure_input_container {
-  width: 40vw;
+  width: 30vw;
   padding: 10px;
 }
 
@@ -66,4 +67,18 @@ code {
   height: 40px;
   padding: 5px;
   margin: auto;
+}
+
+.measure_item {
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.2s all;
+}
+
+.cycle_container {
+  border-bottom: 1px dotted gray;
+}
+
+.cycle_container:last-child {
+  border: none;
 }

@@ -6,13 +6,22 @@ class MeasureController {
         try {
             const { measure_date, ph_level, day_time, pill_quantity, courseId, cycleId } = req.body;
 
+            const measureDate = new Date(measure_date).toJSON().slice(0, 10);
+
             const course = await Course.findOne({where: {id: courseId}});
 
             const startDate = course.start_date;
-            const cycle = Math.floor((new Date(measure_date) - startDate) / (1000 * 60 * 60 * 24 * 3));
-            const measure = await Measure.create({ measure_date, ph_level, day_time, pill_quantity, courseId, cycle });
+            const cycle = Math.floor((new Date(measureDate) - startDate) / (1000 * 60 * 60 * 24 * 3));
 
-            return resp.json({ measure })
+            let check = await Measure.findAll({where: {cycle, day_time}});
+            check = check.map(item => new Date(item.measure_date).toJSON().slice(0, 10)).filter(item => item === measureDate);
+            if (check.length !== 0) {
+                next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.id}`))
+            } else {
+                const measure = await Measure.create({ measure_date: measureDate, ph_level, day_time, pill_quantity, courseId, cycle });
+                return resp.json({ measure })
+            }
+
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -39,11 +48,12 @@ class MeasureController {
         try {
             let { id } = await req.params;
             if (id) {
-                const measure = await Measure.destroy({ where: { id } });
+                const measure = await Measure.findOne({ where: { id } });
+                const result = await Measure.destroy({ where: { id } });
                 return resp.json(
                     {
-                        "message": measure,
-                        id
+                        measure,
+                        result
                     }
                 )
             }
