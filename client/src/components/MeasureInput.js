@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { enums } from '../enums'
 import { createMeasure } from './../redux/tableSlice';
 
 const MeasureInput = () => {
 
+    const dispatch = useDispatch();
+    const rawData = useSelector(state => state.measures.raw);
+
     const [measureDate, setMeasureDate] = useState(new Date());
-    const [phLevel, setPhLevel] = useState(5);
     const [dayTime, setDayTime] = useState(
         new Date().getHours() < 10 ? enums.MORNING : (new Date().getHours() > 16 ? enums.EVENING : enums.DAY)
     );
+    const [phLevel, setPhLevel] = useState(5);
     const [pillQuantity, setPillQuantity] = useState(0);
 
-    const dispatch = useDispatch();
+    useEffect(
+        () => {
+            if (rawData.length !== 0) {
+                const lastMeasure = rawData.filter(item => item.day_time === Object.keys(enums).find(key => enums[key] === dayTime)).sort((a, b) => Number(b.id) - Number(a.id))[0]
+                setPhLevel(lastMeasure.ph_level);
+                setPillQuantity(lastMeasure.pill_quantity);
+            }
+        }, [rawData, dayTime]
+    );
 
     const buttonHandler = () => {
         dispatch(createMeasure(

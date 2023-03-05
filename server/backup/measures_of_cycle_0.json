@@ -53,5 +53,16 @@
         "createdAt": "2023-03-05T12:23:02.933Z",
         "updatedAt": "2023-03-05T12:23:02.933Z",
         "courseId": 6
+    },
+    {
+        "id": 145,
+        "measure_date": "2023-03-05T00:00:00.000Z",
+        "ph_level": 6,
+        "day_time": "EVENING",
+        "pill_quantity": 0,
+        "cycle": 0,
+        "createdAt": "2023-03-05T15:15:59.938Z",
+        "updatedAt": "2023-03-05T15:15:59.938Z",
+        "courseId": 6
     }
 ]
