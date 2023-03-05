@@ -25,6 +25,10 @@ code {
   justify-content: center;
 }
 
+.App:focus {
+  outline: none;
+}
+
 .measure_input_container {
   width: 30vw;
   padding: 10px;

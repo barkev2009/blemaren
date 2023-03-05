@@ -1,8 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { enums } from '../enums'
-import { getMeasures, createMeasure } from './../redux/tableSlice';
+import { createMeasure } from './../redux/tableSlice';
 
 const MeasureInput = () => {
 

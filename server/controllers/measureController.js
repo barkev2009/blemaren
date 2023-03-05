@@ -1,5 +1,6 @@
 const { Measure, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
+const fs = require('fs');
 
 class MeasureController {
     async create(req, resp, next) {
@@ -36,6 +37,15 @@ class MeasureController {
             }
             if (courseId) {
                 const measure = await Measure.findAll({ where: { courseId } });
+
+                const content = JSON.stringify(measure);
+                fs.writeFile(
+                    `backup/measures_of_cycle_${measure[0].cycle}.json`, content, 'utf-8', (err) => {
+                        if (err) {throw err};
+                        console.log('Saved to test.json')
+                    }
+                )
+
                 return resp.json(measure)
             }
             next(ApiError.internalError('Не вышло найти измерение'))
