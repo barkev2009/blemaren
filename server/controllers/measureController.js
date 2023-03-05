@@ -2,24 +2,29 @@ const { Measure, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const fs = require('fs');
 
+const getDate = (dateString) => {
+    const [day, month, year] = dateString.split('.')
+    return `${year}-${month}-${day}`
+}
+
 class MeasureController {
     async create(req, resp, next) {
         try {
             const { measure_date, ph_level, day_time, pill_quantity, courseId, cycleId } = req.body;
 
-            const measureDate = new Date(measure_date).toJSON().slice(0, 10);
+            const measureDate = new Date(measure_date).toLocaleDateString().slice(0, 10);
 
             const course = await Course.findOne({where: {id: courseId}});
 
             const startDate = course.start_date;
-            const cycle = Math.floor((new Date(measureDate) - startDate) / (1000 * 60 * 60 * 24 * 3));
+            const cycle = Math.floor((new Date(getDate(measureDate)) - startDate) / (1000 * 60 * 60 * 24 * 3));
 
             let check = await Measure.findAll({where: {cycle, day_time}});
-            check = check.map(item => new Date(item.measure_date).toJSON().slice(0, 10)).filter(item => item === measureDate);
+            check = check.map(item => new Date(item.measure_date).toLocaleDateString().slice(0, 10)).filter(item => item === measureDate);
             if (check.length !== 0) {
                 next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.id}`))
             } else {
-                const measure = await Measure.create({ measure_date: measureDate, ph_level, day_time, pill_quantity, courseId, cycle });
+                const measure = await Measure.create({ measure_date: getDate(measureDate), ph_level, day_time, pill_quantity, courseId, cycle });
                 return resp.json({ measure })
             }
 
