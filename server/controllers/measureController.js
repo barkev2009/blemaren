@@ -21,7 +21,6 @@ class MeasureController {
     async get(req, resp, next) {
         try {
             let { id, courseId } = await req.query;
-            console.log(req.query);
             if (id) {
                 const measure = await Measure.findOne({ where: { id } });
                 return resp.json(measure)
@@ -31,6 +30,24 @@ class MeasureController {
                 return resp.json(measure)
             }
             next(ApiError.internalError('Не вышло найти измерение'))
+        } catch (error) {
+            next(ApiError.internalError(error.message))
+        }
+    }
+
+    async delete(req, resp, next) {
+        try {
+            let { id } = await req.params;
+            if (id) {
+                const measure = await Measure.destroy({ where: { id } });
+                return resp.json(
+                    {
+                        "message": measure,
+                        id
+                    }
+                )
+            }
+            next(ApiError.internalError('Не вышло удалить измерение'))
         } catch (error) {
             next(ApiError.internalError(error.message))
         }

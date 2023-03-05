@@ -1,5 +1,6 @@
 import React from 'react';
 import { enums } from './../../enums';
+import MeasureContainer from './MeasureContainer';
 
 const DateContainer = ({ dateData }) => {
 
@@ -61,11 +62,8 @@ const DateContainer = ({ dateData }) => {
                     <div>Количество таблеток</div>
                 </div>
                 {dateData.data.map((item, idx) =>
-                    <div key={idx}>
-                        <h6>{enums[item.day_time]}</h6>
-                        <div>{item.ph_level}</div>
-                        <div>{item.pill_quantity}</div>
-                    </div>)}
+                    <MeasureContainer key={item.id} measureData={item} />
+                )}
             </div>
         </div>
     )
