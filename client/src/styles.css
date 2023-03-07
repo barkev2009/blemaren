@@ -40,7 +40,10 @@ code {
   /* width: 40vw; */
   padding: 10px;
   overflow-y: scroll;
-  height: 85vh;
+  max-height: 85vh;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 1px solid #555555
 }
 
 .measure_table_container::-webkit-scrollbar {
@@ -103,6 +106,11 @@ code {
 
 .form-control:disabled {
   background-color: #121212;
+}
+
+.form-control:focus {
+  background-color: #555555;
+  color: white;
 }
 
 .form-check-input:checked {
