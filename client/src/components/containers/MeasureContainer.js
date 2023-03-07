@@ -10,7 +10,7 @@ const MeasureContainer = memo(
         const dispatch = useDispatch();
 
         const styleHandler = () => {
-            return measureData.id === chosen ? 'pink' : '#121212'
+            return measureData.id === chosen ? {backgroundColor: 'pink', color: 'black'} : {backgroundColor: '#121212', color: '#bdbdbd'} 
         }
 
         const chooseMeasure = () => {
@@ -22,7 +22,7 @@ const MeasureContainer = memo(
         }
 
         return (
-            <div className='measure_item' style={{ backgroundColor: styleHandler() }} onClick={chooseMeasure}>
+            <div className='measure_item' style={styleHandler()} onClick={chooseMeasure}>
                 <h6>{enums[measureData.day_time]}</h6>
                 <div>{measureData.ph_level}</div>
                 <div>{measureData.pill_quantity}</div>
