@@ -1,7 +1,11 @@
-import React, { memo} from 'react'
+import React, { memo } from 'react'
+import { useSelector } from 'react-redux';
+import { enums } from '../../enums';
 
 const AverageContainer = memo(
     ({ cycleData, cycle }) => {
+
+        const avgOnly = useSelector(state => state.measures.avgOnly);
 
         const morning_phs = cycleData.map(item => item.data.filter(measure => measure.day_time === 'MORNING')[0]?.ph_level).filter(x => x !== undefined);
         const avg_morning_ph = (morning_phs.reduce((a, b) => a + b, 0) / morning_phs.length).toFixed(1);
@@ -29,23 +33,27 @@ const AverageContainer = memo(
 
         return (
             <div>
-                <h5>Средние показатели</h5>
+                {!avgOnly ? <h5>Средние показатели</h5> : <h5>{`${cycleData[0].date} - ${cycleData[cycleData.length - 1].date}`}</h5>}
                 <div className='date_flex'>
                     <div>
+                        {avgOnly && <div>Время дня</div>}
                         <div>Уровень pH</div>
                         <div>Количество таблеток</div>
                     </div>
                     <div className='morning_col'>
+                        {avgOnly && <div>{enums.MORNING}</div>}
                         {avg_morning_ph !== 'NaN' && <div><b>{avg_morning_ph}</b></div>}
                         {avg_morning_pills !== 'NaN' && <div><b>{avg_morning_pills}</b></div>}
                         {cycle !== 0 && avg_evening_ph !== 'NaN' && avg_morning_ph !== 'NaN' && iconHandler(Number(avg_evening_ph))}
                     </div>
                     <div className='day_col'>
+                        {avgOnly && <div>{enums.DAY}</div>}
                         {avg_day_ph !== 'NaN' && <div><b>{avg_day_ph}</b></div>}
                         {avg_day_pills !== 'NaN' && <div><b>{avg_day_pills}</b></div>}
                         {cycle !== 0 && avg_morning_ph !== 'NaN' && avg_day_ph !== 'NaN' && iconHandler(Number(avg_morning_ph))}
                     </div>
                     <div className='evening_col'>
+                        {avgOnly && <div>{enums.EVENING}</div>}
                         {avg_evening_ph !== 'NaN' && <div><b>{avg_evening_ph}</b></div>}
                         {avg_evening_pills !== 'NaN' && <div><b>{avg_evening_pills}</b></div>}
                         {cycle !== 0 && avg_day_ph !== 'NaN' && avg_evening_ph !== 'NaN' && iconHandler(Number(avg_day_ph))}

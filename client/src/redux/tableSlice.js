@@ -32,10 +32,13 @@ export const sortByObject = sortBy.reduce((a, c, i) => {
 
 const measureSlice = createSlice({
   name: 'measures',
-  initialState: { raw: [], structuredData: [], chosenMeasure: null },
+  initialState: { raw: [], structuredData: [], chosenMeasure: null, avgOnly: false },
   reducers: {
     setChosenMeasure(state, action) {
       state.chosenMeasure = action.payload
+    },
+    setAvgOnly(state, action) {
+      state.avgOnly = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -129,6 +132,6 @@ const measureSlice = createSlice({
 
 // Extract the action creators object and the reducer
 const { reducer } = measureSlice
-export const { setChosenMeasure } = measureSlice.actions
+export const { setChosenMeasure, setAvgOnly } = measureSlice.actions
 // Export the reducer, either as a default or named export
 export default reducer

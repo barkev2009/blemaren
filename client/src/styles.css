@@ -38,7 +38,7 @@ code {
   /* width: 40vw; */
   padding: 10px;
   overflow-y: scroll;
-  height: 90vh;
+  height: 85vh;
 }
 
 .measure_table_container::-webkit-scrollbar {
@@ -86,3 +86,8 @@ code {
 .cycle_container:last-child {
   border: none;
 }
+
+.form-check-input {
+  cursor: pointer;
+}
+
