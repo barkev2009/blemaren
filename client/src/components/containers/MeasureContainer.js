@@ -10,7 +10,7 @@ const MeasureContainer = memo(
         const dispatch = useDispatch();
 
         const styleHandler = () => {
-            return measureData.id === chosen ? 'pink' : 'white'
+            return measureData.id === chosen ? 'pink' : '#121212'
         }
 
         const chooseMeasure = () => {

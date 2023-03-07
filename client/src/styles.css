@@ -10,6 +10,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #121212;
+  color: #bdbdbd;
 }
 
 code {
@@ -91,3 +93,12 @@ code {
   cursor: pointer;
 }
 
+.form-control {
+  background-color: #353535;
+  border-color: #555555;
+  color: #bdbdbd;
+}
+
+.form-control:disabled {
+  background-color: #121212;
+}
