@@ -91,6 +91,8 @@ code {
 
 .form-check-input {
   cursor: pointer;
+  background-color: #464646;
+  border: none;
 }
 
 .form-control {
@@ -101,4 +103,8 @@ code {
 
 .form-control:disabled {
   background-color: #121212;
+}
+
+.form-check-input:checked {
+  background-color: #6071b9;
 }
