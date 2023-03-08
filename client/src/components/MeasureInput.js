@@ -19,8 +19,9 @@ const MeasureInput = () => {
         () => {
             if (rawData.length !== 0) {
                 const lastMeasure = rawData.filter(item => item.day_time === Object.keys(enums).find(key => enums[key] === dayTime)).sort((a, b) => Number(b.id) - Number(a.id))[0]
+                const lastPill = [...rawData].sort((a, b) => Number(b.id) - Number(a.id))[0];
                 setPhLevel(lastMeasure.ph_level);
-                setPillQuantity(lastMeasure.pill_quantity);
+                setPillQuantity(lastPill.pill_quantity);
             }
         }, [rawData, dayTime]
     );
