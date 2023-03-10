@@ -44,19 +44,19 @@ const AverageContainer = memo(
                         {avgOnly && <div>{enums.MORNING}</div>}
                         {avg_morning_ph !== 'NaN' && <div><b>{avg_morning_ph}</b></div>}
                         {avg_morning_pills !== 'NaN' && <div><b>{avg_morning_pills}</b></div>}
-                        {cycle !== 0 && avg_evening_ph !== 'NaN' && avg_morning_ph !== 'NaN' && iconHandler(Number(avg_evening_ph))}
+                        {cycle !== 0 && avg_evening_ph !== 'NaN' && avg_morning_ph !== 'NaN' && iconHandler(Number(avg_day_ph))}
                     </div>
                     <div className='day_col'>
                         {avgOnly && <div>{enums.DAY}</div>}
                         {avg_day_ph !== 'NaN' && <div><b>{avg_day_ph}</b></div>}
                         {avg_day_pills !== 'NaN' && <div><b>{avg_day_pills}</b></div>}
-                        {cycle !== 0 && avg_morning_ph !== 'NaN' && avg_day_ph !== 'NaN' && iconHandler(Number(avg_morning_ph))}
+                        {cycle !== 0 && avg_morning_ph !== 'NaN' && avg_day_ph !== 'NaN' && iconHandler(Number(avg_evening_ph))}
                     </div>
                     <div className='evening_col'>
                         {avgOnly && <div>{enums.EVENING}</div>}
                         {avg_evening_ph !== 'NaN' && <div><b>{avg_evening_ph}</b></div>}
                         {avg_evening_pills !== 'NaN' && <div><b>{avg_evening_pills}</b></div>}
-                        {cycle !== 0 && avg_day_ph !== 'NaN' && avg_evening_ph !== 'NaN' && iconHandler(Number(avg_day_ph))}
+                        {cycle !== 0 && avg_day_ph !== 'NaN' && avg_evening_ph !== 'NaN' && iconHandler(Number(avg_morning_ph))}
                     </div>
                 </div>
             </div>

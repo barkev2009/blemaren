@@ -65,6 +65,7 @@ const MeasureInput = memo(
                     </div>
                 </form>
                 <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
+                {/* <button type="button" className="btn btn-outline-secondary mt-4" onClick={() => generateJWTSimple('someCode')}>Послать токен</button> */}
                 <CanvasContainer />
             </div>
         )

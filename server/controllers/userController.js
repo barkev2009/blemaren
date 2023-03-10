@@ -13,8 +13,6 @@ const generateJWT = (id, name, login) => {
         process.env.SECRET_KEY,
         { expiresIn: '24h' }
     )
-
-
 }
 
 class UserController {
@@ -58,6 +56,12 @@ class UserController {
     async checkAuth(req, resp, next) {
 
         const token = generateJWT(req.user.id, req.user.name, req.user.login);
+        return resp.json({ token })
+    }
+
+    async checkCode(req, resp, next) {
+        const token = await req.body;
+        console.log(token);
         return resp.json({ token })
     }
 }
