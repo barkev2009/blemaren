@@ -17,7 +17,7 @@ const generateJWT = (id, name, login) => {
 
 class UserController {
     async register(req, resp, next) {
-        const { name, login } = req.body;
+        const { name, login, password } = req.body;
 
         if (!name || !login) {
             return next(ApiError.badRequest('Некорректные имя и логин'));
@@ -34,7 +34,8 @@ class UserController {
             return next(ApiError.badRequest('Пользователь с таким логином уже существует'));
         }
 
-        const user = await User.create({ name, login });
+        const hashPassword = await bcrypt.hash(password, 5);
+        const user = await User.create({ name, login, password: hashPassword });
         const token = generateJWT(user.id, user.name, user.login);
 
         return resp.json({ token })
@@ -42,11 +43,16 @@ class UserController {
     }
 
     async login(req, resp, next) {
-        const { login } = req.body;
+        const { login, password } = req.body;
         const candidate = await User.findOne({ where: { login } });
 
         if (!candidate) {
             return next(ApiError.internalError('Пользователь не найден'))
+        }
+
+        let comparePassword = bcrypt.compareSync(password, candidate.password);
+        if (!comparePassword) {
+            return next(ApiError.internalError('Неверный пароль'))
         }
 
         const token = generateJWT(candidate.id, candidate.name, candidate.login);
@@ -56,12 +62,6 @@ class UserController {
     async checkAuth(req, resp, next) {
 
         const token = generateJWT(req.user.id, req.user.name, req.user.login);
-        return resp.json({ token })
-    }
-
-    async checkCode(req, resp, next) {
-        const token = await req.body;
-        console.log(token);
         return resp.json({ token })
     }
 }

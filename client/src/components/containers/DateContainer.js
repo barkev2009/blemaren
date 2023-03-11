@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { enums } from './../../enums';
 import MeasureContainer from './MeasureContainer';
 
 const DateContainer = memo(

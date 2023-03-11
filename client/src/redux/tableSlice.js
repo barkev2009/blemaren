@@ -47,11 +47,11 @@ const measureSlice = createSlice({
       state.structuredData.length = 0;
       state.raw.push(...action.payload);
 
-      const cycles = [... new Set(action.payload.map(item => item.cycle))].reverse();
+      const cycles = [...new Set(action.payload.map(item => item.cycle))].reverse();
 
       cycles.forEach(
         cycle => {
-          let dates = [... new Set(action.payload.filter(item => item.cycle === cycle).map(
+          let dates = [...new Set(action.payload.filter(item => item.cycle === cycle).map(
             item => new Date(item.measure_date).toLocaleDateString()
           ))];
           state.structuredData.push(

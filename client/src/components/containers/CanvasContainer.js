@@ -1,16 +1,12 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { enums } from '../../enums'
-import HeatSquare from '../plot/HeatSquare'
+import { enums } from '../../enums';
 import CycleColumn from './CycleColumn';
 
 const CanvasContainer = memo(
     () => {
 
-        const rawData = useSelector(state => state.measures.raw);
         const cycleData = useSelector(state => [...state.measures.structuredData].sort((a, b) => a.cycle - b.cycle).map(cycle => cycle.cycleData).flat(1).reverse());
-
-        console.log(cycleData)
 
         return (
             <div className='canvas_container'>

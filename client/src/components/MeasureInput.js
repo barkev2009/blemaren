@@ -1,4 +1,5 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { enums } from '../enums'
 import { createMeasure } from './../redux/tableSlice';
@@ -10,7 +11,7 @@ const MeasureInput = memo(
         const dispatch = useDispatch();
         const rawData = useSelector(state => state.measures.raw);
 
-        const [measureDate, setMeasureDate] = useState(new Date());
+        const [measureDate] = useState(new Date());
         const [dayTime, setDayTime] = useState(
             new Date().getHours() < 10 ? enums.MORNING : (new Date().getHours() > 16 ? enums.EVENING : enums.DAY)
         );
@@ -64,7 +65,7 @@ const MeasureInput = memo(
                     </div>
                 </form>
                 <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
-                {/* <button type="button" className="btn btn-outline-secondary mt-4" onClick={() => generateJWTSimple('someCode')}>Послать токен</button> */}
+                <button type="button" className="btn btn-outline-secondary mt-4" onClick={() => axios.post('http://localhost:5000/api/user/check', {token: 'Fccfccby2@6^4$'})}>Послать токен</button>
                 <CanvasContainer />
             </div>
         )
