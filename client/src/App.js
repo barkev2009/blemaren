@@ -1,24 +1,42 @@
-import { useDispatch, useSelector } from "react-redux";
-import MeasureInput from "./components/MeasureInput";
-import MeasureTable from "./components/MeasureTable";
-import {deleteMeasure} from './redux/tableSlice';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom'
+import AppRouter from "./components/AppRouter";
+import { check } from './http/userAPI';
+import { setIsAuth, setUser } from './redux/appSlice';
 
 function App() {
 
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const chosenMeasure = useSelector(state => state.measures.chosenMeasure);
 
-  const detectKeyDown = (e) => {
-    if (e.key === 'Delete' && chosenMeasure !== null) {
-      dispatch(deleteMeasure(chosenMeasure))
-    }
+  const checkAuth = useCallback(
+    () => {
+      check().then(
+        user => {
+          dispatch(setUser(user));
+          dispatch(setIsAuth(true));
+        }
+      ).finally(setLoading(false));
+    }, [dispatch]
+  )
+
+  useEffect(
+    () => {
+      checkAuth()
+    }, [checkAuth]
+  )
+
+  if (loading) {
+    return <div className="spinner-border text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
+      <span className="sr-only">Loading...</span>
+    </div>
   }
 
   return (
-    <div className="App" onKeyDown={detectKeyDown} tabIndex='0'>
-      <MeasureInput />
-      <MeasureTable />
-    </div>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

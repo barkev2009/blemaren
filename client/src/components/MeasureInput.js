@@ -65,7 +65,6 @@ const MeasureInput = memo(
                     </div>
                 </form>
                 <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
-                <button type="button" className="btn btn-outline-secondary mt-4" onClick={() => axios.post('http://localhost:5000/api/user/check', {token: 'Fccfccby2@6^4$'})}>Послать токен</button>
                 <CanvasContainer />
             </div>
         )

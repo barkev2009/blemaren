@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from './tableSlice'
+import measures from './tableSlice';
+import app from './appSlice'
 
 const store = configureStore({
   reducer: {
-    measures: reducer
+    measures,
+    app
   }
 });
 

@@ -2,6 +2,17 @@
   box-sizing: border-box;
 }
 
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #7e7d7d;
+  opacity: 1; /* Firefox */
+}
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #7e7d7d;
+}
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+  color: #7e7d7d;
+}
+
 body {
   margin: 0;
   padding: 10px 20px;
@@ -155,4 +166,10 @@ code {
   font-weight: 700;
   font-size: 20px;
   padding-top: 10px;
+}
+
+.auth_container {
+  margin: auto;
+  margin-top: 30vh;
+  width: 30vw;
 }
