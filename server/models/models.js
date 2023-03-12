@@ -31,7 +31,8 @@ const Measure = sequelize.define(
         ph_level: {type: DataTypes.FLOAT, allowNull: false},
         day_time: {type: DataTypes.ENUM(MORNING, DAY, EVENING), allowNull: false},
         pill_quantity: {type: DataTypes.FLOAT, allowNull: false},
-        cycle: {type: DataTypes.INTEGER, allowNull: false}
+        cycle: {type: DataTypes.INTEGER, allowNull: false},
+        active: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true}
     }
 )
 

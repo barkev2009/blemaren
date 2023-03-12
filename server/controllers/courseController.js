@@ -1,5 +1,6 @@
 const { Course, User } = require('../models/models');
 const ApiError = require('../error/ApiError');
+const { logWithIP } = require('../logs/logger');
 
 class CourseController {
     async create(req, resp, next) {
@@ -8,6 +9,7 @@ class CourseController {
 
             const course = await Course.create({ start_date, end_date, course_status, userId });
 
+            logWithIP('info', {message: 'CREATE', course});
             return resp.json({ course })
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -35,6 +37,7 @@ class CourseController {
             courses = await Course.findAll({ where: { userId }, limit, offset });
         }
 
+        logWithIP('info', {message: 'GET_COURSES_BY_LOGIN'});
         return resp.json(courses);
     }
 
@@ -43,6 +46,7 @@ class CourseController {
             let { id } = await req.query;
             if (id) {
                 const course = await Course.findOne({ where: { id } });
+                logWithIP('info', {message: 'GET_COURSES_BY_ID', course});
                 return resp.json(course)
             }
             next(ApiError.internalError('Не вышло найти курс'))

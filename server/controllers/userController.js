@@ -2,6 +2,7 @@ const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt');
 const { User } = require('../models/models');
 const jwt = require('jsonwebtoken');
+const { logWithIP } = require('../logs/logger');
 
 const generateJWT = (id, name, login) => {
     return jwt.sign(
@@ -38,6 +39,7 @@ class UserController {
         const user = await User.create({ name, login, password: hashPassword });
         const token = generateJWT(user.id, user.name, user.login);
 
+        logWithIP('info', {message: 'REGISTER', token});
         return resp.json({ token })
 
     }
@@ -56,12 +58,14 @@ class UserController {
         }
 
         const token = generateJWT(candidate.id, candidate.name, candidate.login);
+        logWithIP('info', {message: 'LOGIN', token});
         return resp.json({ token })
     }
 
     async checkAuth(req, resp, next) {
 
         const token = generateJWT(req.user.id, req.user.name, req.user.login);
+        logWithIP('info', {message: 'CHECK_AUTH', token});
         return resp.json({ token })
     }
 }

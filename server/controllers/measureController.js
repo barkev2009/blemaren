@@ -1,6 +1,7 @@
 const { Measure, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const fs = require('fs');
+const { logWithIP } = require('../logs/logger');
 
 const getDate = (dateString) => {
     const [day, month, year] = dateString.split('.')
@@ -19,12 +20,14 @@ class MeasureController {
             const startDate = course.start_date;
             const cycle = Math.floor((new Date(getDate(measureDate)) - startDate) / (1000 * 60 * 60 * 24 * 3));
 
-            let check = await Measure.findAll({where: {cycle, day_time}});
-            check = check.map(item => new Date(item.measure_date).toLocaleDateString().slice(0, 10)).filter(item => item === measureDate);
+            let check = await Measure.findAll({where: {cycle, day_time, active: true}});
+            check = check.map(({id, measure_date}) => ({id, date: new Date(measure_date).toLocaleDateString().slice(0, 10)})).filter(item => item.date === measureDate);
             if (check.length !== 0) {
-                next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.id}`))
+                next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.map(({id}) => id)}`))
             } else {
                 const measure = await Measure.create({ measure_date: getDate(measureDate), ph_level, day_time, pill_quantity, courseId, cycle });
+                
+                logWithIP('info', {message: 'CREATE', measure})
                 return resp.json({ measure })
             }
 
@@ -41,7 +44,7 @@ class MeasureController {
                 return resp.json(measure)
             }
             if (courseId) {
-                const measure = await Measure.findAll({ where: { courseId } });
+                const measure = await Measure.findAll({ where: { courseId, active: true } });
 
                 const content = JSON.stringify(measure);
                 fs.writeFile(
@@ -64,11 +67,13 @@ class MeasureController {
             let { id } = await req.params;
             if (id) {
                 const measure = await Measure.findOne({ where: { id } });
-                const result = await Measure.destroy({ where: { id } });
+                await measure.update({active: false})
+                await measure.save();
+                logWithIP('info', {message: 'DELETE', measure});
                 return resp.json(
                     {
                         measure,
-                        result
+                        result: 1
                     }
                 )
             }
