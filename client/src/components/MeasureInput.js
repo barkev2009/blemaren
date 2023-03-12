@@ -34,7 +34,7 @@ const MeasureInput = memo(
                     ph_level: phLevel,
                     pill_quantity: pillQuantity,
                     day_time: Object.keys(enums).filter(item => enums[item] === dayTime)[0],
-                    courseId: 6
+                    courseId: process.env.REACT_APP_COURSE_ID
                 }
             ))
         }
