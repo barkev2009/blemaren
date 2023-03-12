@@ -1,27 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createMeasureAPI, deleteMeasureAPI, getMeasuresAPI } from '../http/measureAPI';
 import { enums } from './../enums'
 
 export const getMeasures = createAsyncThunk(
   'measures/GET_MEASURES',
-  async () => {
-    const response = await axios.get('http://localhost:5000/api/measure/', { params: { courseId: 6 } })
-    return response.data
-  }
+  getMeasuresAPI
 )
 export const createMeasure = createAsyncThunk(
   'measures/CREATE_MEASURE',
-  async (measureData) => {
-    const response = await axios.post(`http://localhost:5000/api/measure/`, measureData)
-    return response.data
-  }
+  createMeasureAPI
 )
 export const deleteMeasure = createAsyncThunk(
   'measures/DELETE_MEASURE',
-  async (id) => {
-    const response = await axios.delete(`http://localhost:5000/api/measure/${id}`)
-    return response.data
-  }
+  deleteMeasureAPI
 )
 
 const sortBy = Object.keys(enums);
