@@ -7,7 +7,7 @@ const CycleColumn = ({ cycleData }) => {
 
     return (
         <div>
-            <div style={{ height: '60px', paddingTop: '6px', paddingRight: '10px', fontWeight: 700 }}>{dateLabel}</div>
+            <div style={{ height: '60px', paddingTop: '6px', fontWeight: 700 }}>{dateLabel}</div>
             {
                 cycleData.data.map(
                     (item, idx) => <HeatSquare key={idx} rawItem={item} />
