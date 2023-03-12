@@ -28,37 +28,42 @@ log4js.configure(
 const logger = log4js.getLogger('server');
 
 const logWithIP = async (level, payload) => {
-    const { data } = await axios.get('https://api.ipify.org?format=json');
-    const ipData = await axios.get(`http://ip-api.com/json/${data.ip}`);
-    const logMessage = {
-        IP: data.ip,
-        ipData: ipData.data,
-        payload
+    try {
+        const { data } = await axios.get('https://api.ipify.org?format=json');
+        const ipData = await axios.get(`http://ip-api.com/json/${data.ip}`);
+        const logMessage = {
+            IP: data.ip,
+            ipData: ipData.data,
+            payload
+        }
+
+        switch (level) {
+            case 'error':
+                logger.error(JSON.stringify(logMessage, null, 2));
+                break;
+            case 'info':
+                logger.info(JSON.stringify(logMessage, null, 2))
+                break;
+            case 'fatal':
+                logger.fatal(JSON.stringify(logMessage, null, 2))
+                break;
+            case 'warn':
+                logger.warn(JSON.stringify(logMessage, null, 2))
+                break;
+            case 'debug':
+                logger.debug(JSON.stringify(logMessage, null, 2))
+                break;
+            case 'trace':
+                logger.trace(JSON.stringify(logMessage, null, 2))
+                break;
+            default:
+                logger.info(JSON.stringify(logMessage, null, 2))
+                break;
+        }
+    } catch (error) {
+        logger.fatal(JSON.stringify(error, null, 2))
     }
 
-    switch (level) {
-        case 'error':
-            logger.error(JSON.stringify(logMessage, null, 2));
-            break;
-        case 'info':
-            logger.info(JSON.stringify(logMessage, null, 2))
-            break;
-        case 'fatal':
-            logger.fatal(JSON.stringify(logMessage, null, 2))
-            break;
-        case 'warn':
-            logger.warn(JSON.stringify(logMessage, null, 2))
-            break;
-        case 'debug':
-            logger.debug(JSON.stringify(logMessage, null, 2))
-            break;
-        case 'trace':
-            logger.trace(JSON.stringify(logMessage, null, 2))
-            break;
-        default:
-            logger.info(JSON.stringify(logMessage, null, 2))
-            break;
-    }
 }
 
 module.exports = { logWithIP };

@@ -4,5 +4,6 @@ node_modules*
 /server/static/*
 
 */.env
+*/logs/*.log
 
 *.bkp
