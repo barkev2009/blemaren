@@ -1,7 +1,7 @@
 import { $host } from "."
 
 export const getMeasuresAPI = async () => {
-    const { data } = await $host.get('/api/measure/', { params: { courseId: 6 } })
+    const { data } = await $host.get('/api/measure/', { params: { courseId: process.env.REACT_APP_COURSE_ID } })
     return data
 }
 
