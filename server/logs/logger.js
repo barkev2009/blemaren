@@ -29,13 +29,14 @@ const logger = log4js.getLogger('server');
 
 const logWithIP = async (level, payload) => {
     try {
-        const { data } = await axios.get('https://api.ipify.org?format=json');
-        const ipData = await axios.get(`http://ip-api.com/json/${data.ip}`);
-        const logMessage = {
-            IP: data.ip,
-            ipData: ipData.data,
-            payload
-        }
+        // const { data } = await axios.get('https://api.ipify.org?format=json');
+        // const ipData = await axios.get(`http://ip-api.com/json/${data.ip}`);
+        // const logMessage = {
+        //     IP: data.ip,
+        //     ipData: ipData.data,
+        //     payload
+        // }
+        const logMessage = payload
 
         switch (level) {
             case 'error':

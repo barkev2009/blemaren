@@ -32,7 +32,7 @@ class MeasureController {
             }
 
         } catch (e) {
-            next(ApiError.badRequest(e.message))
+            next(ApiError.badRequest({function: 'MeasureController.create', message: e.message}))
         }
     }
 
@@ -58,7 +58,7 @@ class MeasureController {
             }
             next(ApiError.internalError('Не вышло найти измерение'))
         } catch (error) {
-            next(ApiError.internalError(error.message))
+            next(ApiError.badRequest({function: 'MeasureController.get', message: error.message}))
         }
     }
 
@@ -79,7 +79,7 @@ class MeasureController {
             }
             next(ApiError.internalError('Не вышло удалить измерение'))
         } catch (error) {
-            next(ApiError.internalError(error.message))
+            next(ApiError.badRequest({function: 'MeasureController.delete', message: error.message}))
         }
     }
 }

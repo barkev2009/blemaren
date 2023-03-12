@@ -12,7 +12,7 @@ class CourseController {
             logWithIP('info', {message: 'CREATE', course});
             return resp.json({ course })
         } catch (e) {
-            next(ApiError.badRequest(e.message))
+            next(ApiError.badRequest({function: 'CourseController.create', message: e.message}))
         }
     }
 
@@ -31,7 +31,7 @@ class CourseController {
 
             const user = await User.findOne({ where: { login } });
             if (!user) {
-                next(ApiError.badRequest('Пользователь не найден'))
+                next(ApiError.badRequest({function: 'CourseController.getByLogin', message: 'Пользователь не найден'}))
             }
             const userId = user.id;
             courses = await Course.findAll({ where: { userId }, limit, offset });
@@ -51,7 +51,7 @@ class CourseController {
             }
             next(ApiError.internalError('Не вышло найти курс'))
         } catch (error) {
-            next(ApiError.internalError(error.message))
+            next(ApiError.badRequest({function: 'CourseController.getById', message: error.message}))
         }
 
     }
