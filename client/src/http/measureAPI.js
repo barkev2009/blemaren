@@ -11,6 +11,6 @@ export const createMeasureAPI = async (measureData) => {
 }
 
 export const deleteMeasureAPI = async (id) => {
-    const {data} = await $host.delete(`/api/measure/${id}`)
+    const { data } = await $host.delete(`/api/measure/${id}`)
     return data
 }

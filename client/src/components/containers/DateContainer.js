@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { enums } from '../../enums';
 import MeasureContainer from './MeasureContainer';
 
 const DateContainer = memo(
@@ -52,6 +53,8 @@ const DateContainer = memo(
             return `${day}-е ${month} ${year}`
         }
 
+        const dayTimes = Object.keys(enums);
+
         return (
             <div>
                 <h4>{getDate(dateData.date)}</h4>
@@ -61,9 +64,17 @@ const DateContainer = memo(
                         <div>Уровень pH</div>
                         <div>Количество таблеток</div>
                     </div>
-                    {dateData.data.map((item, idx) =>
-                        <MeasureContainer key={item.id} measureData={item} />
-                    )}
+                    {
+                        dayTimes.map(
+                            item => {
+                                const checkDayTime = dateData.data.filter(measure => measure.day_time === item);
+                                if (checkDayTime.length !== 0) {
+                                    return <MeasureContainer key={checkDayTime[0].id} measureData={checkDayTime[0]} />
+                                }
+                                return <div className='measure_item empty'></div>
+                            }
+                        )
+                    }
                 </div>
             </div>
         )

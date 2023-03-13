@@ -43,10 +43,10 @@ class CourseController {
 
     async getById(req, resp, next) {
         try {
-            let { id } = await req.query;
+            let { id } = await req.params;
             if (id) {
                 const course = await Course.findOne({ where: { id } });
-                logWithIP('info', {message: 'GET_COURSES_BY_ID', course});
+                logWithIP('info', {message: 'GET_COURSE_BY_ID', course});
                 return resp.json(course)
             }
             next(ApiError.internalError('Не вышло найти курс'))

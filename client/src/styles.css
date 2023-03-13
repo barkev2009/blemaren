@@ -99,6 +99,11 @@ code {
   cursor: pointer;
   border-radius: 5px;
   transition: 0.2s all;
+  width: 60px;
+}
+
+.measure_item.empty {
+  cursor: default;
 }
 
 .cycle_container {
@@ -177,6 +182,11 @@ code {
 
 .heat_square.active {
   border-color: #bdbdbd;
+}
+
+.heat_square.empty {
+  background-color: #121212;
+  cursor: default;
 }
 
 .auth_container {

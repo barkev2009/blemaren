@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import AppRouter from "./components/AppRouter";
 import { check } from './http/userAPI';
 import { setIsAuth, setUser } from './redux/appSlice';
+import { setCourse } from './redux/courseSlice';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         user => {
           dispatch(setUser(user));
           dispatch(setIsAuth(true));
+          dispatch(setCourse())
         }
       ).finally(setLoading(false));
     }, [dispatch]

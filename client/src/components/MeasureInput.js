@@ -7,10 +7,14 @@ import CanvasContainer from './containers/CanvasContainer';
 const MeasureInput = memo(
     () => {
 
+        const getDateFormatted = (dateString) => {
+            return `${dateString.split('.')[2]}-${dateString.split('.')[1]}-${dateString.split('.')[0]}`
+        }
+
         const dispatch = useDispatch();
         const rawData = useSelector(state => state.measures.raw);
 
-        const [measureDate] = useState(new Date());
+        const [measureDate, setMeasureDate] = useState(getDateFormatted(new Date().toLocaleDateString()));
         const [dayTime, setDayTime] = useState(
             new Date().getHours() < 10 ? enums.MORNING : (new Date().getHours() > 16 ? enums.EVENING : enums.DAY)
         );
@@ -44,7 +48,7 @@ const MeasureInput = memo(
                 <form>
                     <div className="form-group">
                         <label htmlFor="dateInput">Дата измерения</label>
-                        <input disabled type="text" className="form-control" id="dateInput" value={measureDate.toLocaleDateString()} />
+                        <input type="date" className="form-control" id="dateInput" onChange={e => setMeasureDate(getDateFormatted(new Date(e.target.value).toLocaleDateString()))} value={measureDate} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="dayTime">Время дня</label>
