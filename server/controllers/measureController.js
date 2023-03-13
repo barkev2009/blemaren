@@ -47,10 +47,12 @@ class MeasureController {
                 const measure = await Measure.findAll({ where: { courseId, active: true } });
 
                 const content = JSON.stringify(measure);
+                const currentDate = new Date().toJSON().slice(0, 10);
+                const fileName = `backup/measures_of_cycle_${measure[0].cycle}_${currentDate}.json`
                 fs.writeFile(
-                    `backup/measures_of_cycle_${measure[0].cycle}.json`, content, 'utf-8', (err) => {
+                    fileName, content, 'utf-8', (err) => {
                         if (err) {throw err};
-                        console.log('Saved to test.json')
+                        console.log(`Saved to ${fileName}`)
                     }
                 )
 

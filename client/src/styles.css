@@ -2,14 +2,20 @@
   box-sizing: border-box;
 }
 
-.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #7e7d7d;
-  opacity: 1; /* Firefox */
+  opacity: 1;
+  /* Firefox */
 }
-.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   color: #7e7d7d;
 }
-.form-control::-ms-input-placeholder { /* Microsoft Edge */
+
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
   color: #7e7d7d;
 }
 
@@ -67,7 +73,7 @@ code {
   justify-content: flex-start;
 }
 
-.date_flex > div {
+.date_flex>div {
   padding: 0 10px;
 }
 
@@ -131,7 +137,7 @@ code {
 .canvas_container {
   display: block;
   width: 90%;
-  height: 36vh;
+  height: 270px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -172,4 +178,10 @@ code {
   margin: auto;
   margin-top: 30vh;
   width: 30vw;
+}
+
+@media screen and (max-width: 500px) {
+  .measure_input_container {
+    width: 90vw;
+  }
 }
