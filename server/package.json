@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --ignore ./backup index.js"
+    "dev": "nodemon --ignore ./backup index.js",
+    "prod": "nohup node index.js &"
   },
   "keywords": [],
   "author": "",
