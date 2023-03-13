@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd server
-npm run dev & disown
+nohup node index.js &
