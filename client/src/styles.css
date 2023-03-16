@@ -148,6 +148,7 @@ code {
   flex-wrap: wrap;
   align-content: flex-start;
   overflow-x: scroll;
+  margin: auto;
   margin-top: 20px;
   border-radius: 10px;
   border: 1px solid #555555;
@@ -198,5 +199,9 @@ code {
 @media screen and (max-width: 500px) {
   .measure_input_container {
     width: 90vw;
+  }
+
+  .auth_container {
+    width: 80vw;
   }
 }

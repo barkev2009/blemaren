@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { enums } from '../enums'
+import { defineDuration } from '../utils/functions';
 import { createMeasure } from './../redux/tableSlice';
 import CanvasContainer from './containers/CanvasContainer';
 
@@ -20,6 +21,7 @@ const MeasureInput = memo(
         );
         const [phLevel, setPhLevel] = useState(5);
         const [pillQuantity, setPillQuantity] = useState(0);
+        const [duration, setDuration] = useState(null);
 
         useEffect(
             () => {
@@ -42,6 +44,18 @@ const MeasureInput = memo(
                 }
             ))
         }
+
+        const dbDate = useSelector(state => state.course.course.start_date);
+
+        useEffect(
+            () => {
+                if (!!dbDate) {
+                    const curDate = new Date();
+                    const startDate = new Date(dbDate);
+                    setDuration(defineDuration(curDate - startDate));
+                }
+            }, [dbDate]
+        );
 
         return (
             <div className='measure_input_container'>
@@ -68,6 +82,8 @@ const MeasureInput = memo(
                     </div>
                 </form>
                 <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
+                <div style={{marginTop: '10px'}}>Прошло с начала курса:</div>
+                <div>{duration}</div>
                 <CanvasContainer />
             </div>
         )
