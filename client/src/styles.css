@@ -179,6 +179,17 @@ code {
   font-size: 20px;
   padding-top: 10px;
   transition: 0.2s all;
+  position: relative;
+}
+
+
+.bi-bookmark-check {
+  position: absolute;
+  float: right;
+  top: 0;
+  right: 0;
+  font-size: 15px;
+  color: #bdbdbd;
 }
 
 .heat_square.active {
