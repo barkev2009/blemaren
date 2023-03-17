@@ -13,7 +13,7 @@ const $authHost = axios.create(
 )
 
 const authInterceptor = config => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('blemaren_token')}`
+    config.headers.authorization = `Bearer ${localStorage.getItem(process.env.REACT_APP_LOCAL_STORAGE_KEY)}`
     return config
 }
 
