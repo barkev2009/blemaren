@@ -66,12 +66,12 @@ const DateContainer = memo(
                     </div>
                     {
                         dayTimes.map(
-                            item => {
+                            (item, idx) => {
                                 const checkDayTime = dateData.data.filter(measure => measure.day_time === item);
                                 if (checkDayTime.length !== 0) {
                                     return <MeasureContainer key={checkDayTime[0].id} measureData={checkDayTime[0]} />
                                 }
-                                return <div className='measure_item empty'></div>
+                                return <div key={idx} className='measure_item empty'></div>
                             }
                         )
                     }
