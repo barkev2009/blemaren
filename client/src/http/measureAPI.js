@@ -6,8 +6,12 @@ export const getMeasuresAPI = async () => {
 }
 
 export const createMeasureAPI = async (measureData) => {
-    const { data } = await $host.post(`/api/measure/`, measureData)
-    return data
+    try {
+        const { data } = await $host.post(`/api/measure/`, measureData);
+        return data
+    } catch (error) {
+        throw error.response.data;
+    }   
 }
 
 export const deleteMeasureAPI = async (id) => {

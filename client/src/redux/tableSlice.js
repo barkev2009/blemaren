@@ -23,7 +23,7 @@ export const sortByObject = sortBy.reduce((a, c, i) => {
 
 const measureSlice = createSlice({
   name: 'measures',
-  initialState: { raw: [], structuredData: [], chosenMeasure: null, avgOnly: false },
+  initialState: { raw: [], structuredData: [], chosenMeasure: null, avgOnly: false, error: null },
   reducers: {
     setChosenMeasure(state, action) {
       state.chosenMeasure = action.payload
@@ -64,7 +64,7 @@ const measureSlice = createSlice({
     });
     builder.addCase(deleteMeasure.fulfilled, (state, action) => {
       if (action.payload.result === 1) {
-
+        state.error = null;
         const measure = action.payload.measure;
         state.chosenMeasure = null;
         state.raw = state.raw.filter(item => Number(item.id) !== Number(measure.id));
@@ -86,6 +86,7 @@ const measureSlice = createSlice({
       const measure = action.payload.measure;
       if (measure) {
         state.raw.push(measure);
+        state.error = null;
 
         const cycle = state.structuredData.filter(item => Number(item.cycle) === Number(measure.cycle))[0];
         if (cycle) {
@@ -117,6 +118,12 @@ const measureSlice = createSlice({
         }
       }
     }
+    );
+    builder.addCase(
+      createMeasure.rejected, (state, action) => {
+        console.log(action.error);
+        state.error = action.error
+      }
     )
   }
 })

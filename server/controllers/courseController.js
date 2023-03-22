@@ -22,7 +22,7 @@ class CourseController {
         let { page, limit } = req.query;
 
         page = page || 1;
-        limit = limit || 5;
+        limit = limit || 10;
 
         let offset = limit * (page - 1);
         let courses;

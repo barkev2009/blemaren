@@ -14,6 +14,7 @@ const MeasureInput = memo(
 
         const dispatch = useDispatch();
         const rawData = useSelector(state => state.measures.raw);
+        const error = useSelector(state => state.measures.error);
 
         const [measureDate, setMeasureDate] = useState(getDateFormatted(new Date().toLocaleDateString()));
         const [dayTime, setDayTime] = useState(
@@ -82,8 +83,10 @@ const MeasureInput = memo(
                     </div>
                 </form>
                 <button type="button" className="btn btn-outline-primary mt-4" onClick={buttonHandler}><i className="bi bi-database-add"></i>{`  Добавить измерение`}</button>
-                <div style={{marginTop: '10px'}}>Прошло с начала курса:</div>
+
+                <div style={{ marginTop: '10px' }}>Прошло с начала курса:</div>
                 <div>{duration}</div>
+                {error && <div className="alert alert-danger" role="alert">{error.message}</div>}
                 <CanvasContainer />
             </div>
         )

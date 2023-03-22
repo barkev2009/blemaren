@@ -2,6 +2,7 @@ const { Measure, Course } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const fs = require('fs');
 const { logWithIP } = require('../logs/logger');
+const { testSend } = require('../mail/mailSender');
 
 const getDate = (dateString) => {
     const [day, month, year] = dateString.split('.')
@@ -27,7 +28,8 @@ class MeasureController {
             } else {
                 const measure = await Measure.create({ measure_date: getDate(measureDate), ph_level, day_time, pill_quantity, courseId, cycle });
                 
-                logWithIP('info', {message: 'CREATE', measure})
+                logWithIP('info', {message: 'CREATE', measure});
+                testSend();
                 return resp.json({ measure })
             }
 
