@@ -30,6 +30,9 @@ const measureSlice = createSlice({
     },
     setAvgOnly(state, action) {
       state.avgOnly = action.payload
+    },
+    removeError(state) {
+      state.error = null
     }
   },
   extraReducers: (builder) => {
@@ -130,6 +133,6 @@ const measureSlice = createSlice({
 
 // Extract the action creators object and the reducer
 const { reducer } = measureSlice
-export const { setChosenMeasure, setAvgOnly } = measureSlice.actions
+export const { setChosenMeasure, setAvgOnly, removeError } = measureSlice.actions
 // Export the reducer, either as a default or named export
 export default reducer

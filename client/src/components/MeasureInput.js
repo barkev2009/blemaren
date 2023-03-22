@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { enums } from '../enums'
 import { defineDuration } from '../utils/functions';
-import { createMeasure } from './../redux/tableSlice';
+import { createMeasure, removeError } from './../redux/tableSlice';
 import CanvasContainer from './containers/CanvasContainer';
 
 const MeasureInput = memo(
@@ -86,7 +86,7 @@ const MeasureInput = memo(
 
                 <div style={{ marginTop: '10px' }}>Прошло с начала курса:</div>
                 <div>{duration}</div>
-                {error && <div className="alert alert-danger" role="alert">{error.message}</div>}
+                {error && <div className="alert alert-danger" role="alert" onClick={() => dispatch(removeError())}>{error.message}</div>}
                 <CanvasContainer />
             </div>
         )
