@@ -6,7 +6,7 @@ import { createMeasure, removeError } from './../redux/tableSlice';
 import CanvasContainer from './containers/CanvasContainer';
 
 const MeasureInput = memo(
-    () => {
+    ({courseId}) => {
 
         const getDateFormatted = (dateString) => {
             return `${dateString.split('.')[2]}-${dateString.split('.')[1]}-${dateString.split('.')[0]}`
@@ -41,7 +41,7 @@ const MeasureInput = memo(
                     ph_level: phLevel,
                     pill_quantity: pillQuantity,
                     day_time: Object.keys(enums).filter(item => enums[item] === dayTime)[0],
-                    courseId: process.env.REACT_APP_COURSE_ID
+                    courseId
                 }
             ))
         }

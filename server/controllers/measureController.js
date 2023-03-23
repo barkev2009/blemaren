@@ -46,7 +46,8 @@ class MeasureController {
                 return resp.json(measure)
             }
             if (courseId) {
-                const measure = await Measure.findAll({ where: { courseId, active: true } });
+                const course = await Course.findOne({where: {uuid: courseId}});
+                const measure = await Measure.findAll({ where: { courseId: course.id, active: true } });
 
                 const content = JSON.stringify(measure);
                 const currentDate = new Date().toJSON().slice(0, 10);

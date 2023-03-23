@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMeasures, deleteMeasure, setAvgOnly } from './../redux/tableSlice';
+import { deleteMeasure, setAvgOnly } from './../redux/tableSlice';
 import CycleContainer from './containers/CycleContainer'
 
 const MeasureTable = memo(
@@ -10,18 +10,6 @@ const MeasureTable = memo(
     const dateSplitData = useSelector(state => state.measures.structuredData);
     const chosenMeasure = useSelector(state => state.measures.chosenMeasure);
     const avgOnly = useSelector(state => state.measures.avgOnly);
-
-    const initialGetMeasures = useCallback(
-      () => {
-        dispatch(getMeasures())
-      }, [dispatch]
-    )
-
-    useEffect(
-      () => {
-        initialGetMeasures();
-      }, [initialGetMeasures]
-    );
 
     const deleteHandler = () => {
       dispatch(deleteMeasure(chosenMeasure))

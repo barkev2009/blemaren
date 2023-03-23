@@ -1,10 +1,15 @@
 import Auth from "./components/Auth";
+import Courses from "./components/Courses";
 import Main from "./components/Main";
-import { AUTH_ROUTE, MAIN_ROUTE } from "./utils/consts";
+import { AUTH_ROUTE, COURSES_ROUTE, MAIN_ROUTE } from "./utils/consts";
 
 export const authRoutes = [
     {
-        path: MAIN_ROUTE,
+        path: COURSES_ROUTE,
+        Component: Courses
+    },
+    {
+        path: MAIN_ROUTE + '/:id',
         Component: Main
     }
 ]

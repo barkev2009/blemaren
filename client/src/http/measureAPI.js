@@ -1,7 +1,8 @@
 import { $host } from "."
 
-export const getMeasuresAPI = async () => {
-    const { data } = await $host.get('/api/measure/', { params: { courseId: process.env.REACT_APP_COURSE_ID } })
+export const getMeasuresAPI = async (courseId) => {
+    const { data } = await $host.get('/api/measure/', { params: { courseId } });
+    localStorage.setItem(process.env.REACT_APP_LOCAL_STORAGE_KEY_COURSE, courseId);
     return data
 }
 

@@ -17,9 +17,7 @@ class CourseController {
     }
 
     async getByLogin(req, resp) {
-        let { login } = req.params;
-
-        let { page, limit } = req.query;
+        let { page, limit, login } = req.query;
 
         page = page || 1;
         limit = limit || 10;
@@ -45,7 +43,7 @@ class CourseController {
         try {
             let { id } = await req.params;
             if (id) {
-                const course = await Course.findOne({ where: { id } });
+                const course = await Course.findOne({ where: { uuid: id } });
                 logWithIP('info', {message: 'GET_COURSE_BY_ID', course});
                 return resp.json(course)
             }

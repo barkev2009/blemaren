@@ -4,6 +4,6 @@ const courseController = require('../controllers/courseController');
 
 router.post('/', courseController.create);
 router.get('/:id', courseController.getById);
-router.get('/:login', courseController.getByLogin);
+router.get('/', courseController.getByLogin);
 
 module.exports = router;

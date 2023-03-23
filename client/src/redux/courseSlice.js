@@ -1,18 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getCourseAPI } from '../http/courseAPI';
+import { getCourseAPI, getCoursesByLoginAPI } from '../http/courseAPI';
 
 export const setCourse = createAsyncThunk(
     'course/GET_COURSE',
     getCourseAPI
 )
 
+export const getCoursesByLogin = createAsyncThunk(
+    'course/GET_COURSE_BY_LOGIN',
+    getCoursesByLoginAPI
+)
+
 const courseSlice = createSlice({
     name: 'course',
-    initialState: { course: {} },
+    initialState: { course: {}, courses: [] },
     extraReducers: (builder) => {
         builder.addCase(setCourse.fulfilled, (state, action) => {
             state.course = action.payload
-        })
+        });
+        builder.addCase(
+            getCoursesByLogin.fulfilled, (state, action) => {
+                state.courses = action.payload
+            }
+        )
     }
 })
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginAPI } from '../http/userAPI';
 import { setIsAuth, setUser } from '../redux/appSlice';
-import { MAIN_ROUTE } from '../utils/consts';
+import { COURSES_ROUTE, MAIN_ROUTE } from '../utils/consts';
 
 const Auth = () => {
 
@@ -20,7 +20,12 @@ const Auth = () => {
             dispatch(setUser(user));
             dispatch(setIsAuth(true));
             setError(null);
-            navigate(MAIN_ROUTE);
+            const curCourse = localStorage.getItem(process.env.REACT_APP_LOCAL_STORAGE_KEY_COURSE);
+            if (!!curCourse) {
+                navigate(MAIN_ROUTE  + `/${curCourse}`);
+            } else {
+                navigate(COURSES_ROUTE);
+            }            
         } catch (error) {
             setError(error.response.data.message);
         }

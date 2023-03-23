@@ -222,6 +222,16 @@ code {
   color: #992841;
 }
 
+
+.card {
+  transition: 0.2s all;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05, 1);
+}
+
 @media screen and (max-width: 500px) {
   .measure_input_container {
     width: 90vw;
