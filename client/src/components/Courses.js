@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createCourse, getCoursesByLogin, setCourse } from '../redux/courseSlice';
+import { createCourse, getCoursesByLogin } from '../redux/courseSlice';
 import { AUTH_ROUTE } from '../utils/consts';
 import CourseContainer from './containers/CourseContainer';
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { loginAPI, register } from '../http/userAPI';
 import { setIsAuth, setUser } from '../redux/appSlice';
-import { AUTH_ROUTE, COURSES_ROUTE, MAIN_ROUTE, REGISTER_ROUTE } from '../utils/consts';
+import { AUTH_ROUTE, COURSES_ROUTE, REGISTER_ROUTE } from '../utils/consts';
 
 const Auth = () => {
 
