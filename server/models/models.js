@@ -20,7 +20,8 @@ const Course = sequelize.define(
         uuid: {type: DataTypes.UUID, unique: true, allowNull: false, defaultValue: Sequelize.literal('uuid_in((md5((random())::text))::cstring)')},
         start_date: {type: DataTypes.DATE, allowNull: false},
         end_date: {type: DataTypes.DATE, allowNull: true},
-        course_status: {type: DataTypes.ENUM(ACTIVE, FINISHED), allowNull: false, defaultValue: ACTIVE}
+        course_status: {type: DataTypes.ENUM(ACTIVE, FINISHED), allowNull: false, defaultValue: ACTIVE},
+        active: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true}
     }
 )
 

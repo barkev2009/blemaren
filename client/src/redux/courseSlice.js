@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getCourseAPI, getCoursesByLoginAPI } from '../http/courseAPI';
+import { createCourseAPI, deleteCourseAPI, getCourseAPI, getCoursesByLoginAPI } from '../http/courseAPI';
 
 export const setCourse = createAsyncThunk(
     'course/GET_COURSE',
@@ -9,6 +9,16 @@ export const setCourse = createAsyncThunk(
 export const getCoursesByLogin = createAsyncThunk(
     'course/GET_COURSE_BY_LOGIN',
     getCoursesByLoginAPI
+)
+
+export const createCourse = createAsyncThunk(
+    'course/CREATE',
+    createCourseAPI
+)
+
+export const deleteCourse = createAsyncThunk(
+    'course/DELETE',
+    deleteCourseAPI
 )
 
 const courseSlice = createSlice({
@@ -22,7 +32,18 @@ const courseSlice = createSlice({
             getCoursesByLogin.fulfilled, (state, action) => {
                 state.courses = action.payload
             }
-        )
+        );
+        builder.addCase(
+            createCourse.fulfilled, (state, action) => {
+                state.courses.push(action.payload);
+            }  
+        );
+        builder.addCase(
+            deleteCourse.fulfilled, (state, action) => {
+                state.course = {};
+                state.courses = state.courses.filter(course => course.uuid !== action.payload.course.uuid );
+            }
+        );
     }
 })
 

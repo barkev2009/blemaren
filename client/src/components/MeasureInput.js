@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { enums } from '../enums'
+import { COURSES_ROUTE } from '../utils/consts';
 import { defineDuration } from '../utils/functions';
 import { createMeasure, removeError } from './../redux/tableSlice';
 import CanvasContainer from './containers/CanvasContainer';
@@ -16,6 +18,7 @@ const MeasureInput = memo(
         const rawData = useSelector(state => state.measures.raw);
         const error = useSelector(state => state.measures.error);
         const courseId = useSelector(state => state.course.course.uuid);
+        const navigate = useNavigate();
 
         const [measureDate, setMeasureDate] = useState(getDateFormatted(new Date().toLocaleDateString()));
         const [dayTime, setDayTime] = useState(
@@ -29,8 +32,10 @@ const MeasureInput = memo(
             () => {
                 if (rawData.length !== 0) {
                     const lastMeasure = rawData.filter(item => item.day_time === Object.keys(enums).find(key => enums[key] === dayTime)).sort((a, b) => Number(b.id) - Number(a.id))[0]
-                    setPhLevel(lastMeasure.ph_level);
-                    setPillQuantity(lastMeasure.pill_quantity);
+                    if (lastMeasure) {
+                        setPhLevel(lastMeasure.ph_level);
+                        setPillQuantity(lastMeasure.pill_quantity);
+                    }
                 }
             }, [rawData, dayTime]
         );
@@ -61,6 +66,7 @@ const MeasureInput = memo(
 
         return (
             <div className='measure_input_container'>
+                <button className='btn btn-outline-secondary' onClick={() => navigate(COURSES_ROUTE, {replace: true})}>Вернуться к курсам</button>
                 <form>
                     <div className="form-group">
                         <label htmlFor="dateInput">Дата измерения</label>

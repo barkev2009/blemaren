@@ -16,12 +16,19 @@ class MeasureController {
 
             const measureDate = new Date(measure_date).toLocaleDateString().slice(0, 10);
 
-            const course = await Course.findOne({where: {uuid: courseId}});
+            const course = await Course.findOne({where: {uuid: courseId, active: true}});
 
             const startDate = course.start_date;
-            const cycle = Math.floor((new Date(getDate(measureDate)) - startDate) / (1000 * 60 * 60 * 24 * 3));
+            let cycle = Math.floor((new Date(getDate(measureDate)) - new Date(getDate(startDate.toLocaleDateString()))) / (1000 * 60 * 60 * 24 * 3));
+            console.log(cycle);
+            console.log((new Date(getDate(measureDate)) - startDate) / (1000 * 60 * 60 * 24 * 3));
+            console.log(measureDate);
+            console.log(startDate);
+            if (new Date(getDate(measureDate)).toLocaleDateString() === new Date(startDate).toLocaleDateString()) {
+                cycle = 0
+            }
 
-            let check = await Measure.findAll({where: {cycle, day_time, active: true}});
+            let check = await Measure.findAll({where: {cycle, day_time, active: true, courseId: course.id}});
             check = check.map(({id, measure_date}) => ({id, date: new Date(measure_date).toLocaleDateString().slice(0, 10)})).filter(item => item.date === measureDate);
             if (check.length !== 0) {
                 next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.map(({id}) => id)}`))
@@ -46,19 +53,20 @@ class MeasureController {
                 return resp.json(measure)
             }
             if (courseId) {
-                const course = await Course.findOne({where: {uuid: courseId}});
+                const course = await Course.findOne({where: {uuid: courseId, active: true}});
                 const measure = await Measure.findAll({ where: { courseId: course.id, active: true } });
 
                 const content = JSON.stringify(measure);
                 const currentDate = new Date().toJSON().slice(0, 10);
-                const fileName = `backup/measures_of_cycle_${measure[0].cycle}_${currentDate}.json`
-                fs.writeFile(
-                    fileName, content, 'utf-8', (err) => {
-                        if (err) {throw err};
-                        console.log(`Saved to ${fileName}`)
-                    }
-                )
-
+                if (measure.length !== 0) {
+                    const fileName = `backup/measures_of_cycle_${measure[0].cycle}_${currentDate}.json`
+                    fs.writeFile(
+                        fileName, content, 'utf-8', (err) => {
+                            if (err) {throw err};
+                            console.log(`Saved to ${fileName}`)
+                        }
+                    )
+                }
                 return resp.json(measure)
             }
             next(ApiError.internalError('Не вышло найти измерение'))

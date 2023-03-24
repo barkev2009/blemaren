@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getCoursesByLogin, setCourse } from '../redux/courseSlice';
+import { createCourse, getCoursesByLogin, setCourse } from '../redux/courseSlice';
 import CourseContainer from './containers/CourseContainer';
 
 const Courses = () => {
@@ -17,13 +17,22 @@ const Courses = () => {
         }, [user, dispatch]
     );
 
+    const clickHandler = () => {
+        const courseData = {
+            start_date: new Date(),
+            userId: user.id
+        }
+        dispatch(createCourse(courseData));
+    }
+
     return (
-        <div className='App'>
+        <div className='courses_container'>
             {
                 courses.length !== 0 && courses.map(
                     course => <CourseContainer key={course.id} course={course} />
                 )
             }
+            <button className="btn btn-outline-primary" onClick={clickHandler}>Добавить курс</button>
         </div>
     )
 }
