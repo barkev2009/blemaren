@@ -1,7 +1,7 @@
 import Auth from "./components/Auth";
 import Courses from "./components/Courses";
 import Main from "./components/Main";
-import { AUTH_ROUTE, COURSES_ROUTE, MAIN_ROUTE } from "./utils/consts";
+import { AUTH_ROUTE, COURSES_ROUTE, MAIN_ROUTE, REGISTER_ROUTE } from "./utils/consts";
 
 export const authRoutes = [
     {
@@ -17,6 +17,10 @@ export const authRoutes = [
 export const publicRoutes = [
     {
         path: AUTH_ROUTE,
+        Component: Auth
+    },
+    {
+        path: REGISTER_ROUTE,
         Component: Auth
     }
 ]

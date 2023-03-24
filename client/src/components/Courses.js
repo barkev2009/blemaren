@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { createCourse, getCoursesByLogin, setCourse } from '../redux/courseSlice';
+import { AUTH_ROUTE } from '../utils/consts';
 import CourseContainer from './containers/CourseContainer';
 
 const Courses = () => {
@@ -8,6 +10,7 @@ const Courses = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.app.user);
     const courses = useSelector(state => state.course.courses);
+    const navigate = useNavigate();
 
     useEffect(
         () => {
@@ -33,6 +36,7 @@ const Courses = () => {
                 )
             }
             <button className="btn btn-outline-primary" onClick={clickHandler}>Добавить курс</button>
+            <button className="btn btn-outline-secondary" onClick={() => navigate(AUTH_ROUTE, {replace: true})}>К авторизации</button>
         </div>
     )
 }

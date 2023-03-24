@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { authRoutes, publicRoutes } from '../routes';
+import { AUTH_ROUTE } from '../utils/consts';
 
 const AppRouter = () => {
 
@@ -19,6 +20,7 @@ const AppRouter = () => {
                     ({path, Component}) => <Route key={path} path={path} Component={Component} exact />
                 )
             }
+            <Route path='/' element={<Navigate to={AUTH_ROUTE} />} />
         </Routes>
     )
 }
