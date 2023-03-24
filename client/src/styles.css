@@ -204,7 +204,10 @@ code {
 .auth_container {
   margin: auto;
   margin-top: 30vh;
-  width: 30vw;
+  width: 50vw;
+  border: 1px solid #7b7a7a;
+  border-radius: 20px;
+  padding: 30px;
 }
 
 .cycle_column {
@@ -324,6 +327,7 @@ code {
 
   .auth_container {
     width: 80vw;
+    margin-top: 20vh;
   }
 
   .card {
