@@ -30,13 +30,16 @@ const Courses = () => {
 
     return (
         <div className='courses_container'>
+            <h2>{`Добро пожаловать, ${user.name}`}</h2>
             {
                 courses.length !== 0 && courses.map(
                     course => <CourseContainer key={course.id} course={course} />
                 )
             }
-            <button className="btn btn-outline-primary" onClick={clickHandler}>Добавить курс</button>
-            <button className="btn btn-outline-secondary" onClick={() => navigate(AUTH_ROUTE, {replace: true})}>К авторизации</button>
+            <div className='course_btn_container' style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                <button className="btn btn-outline-primary" onClick={clickHandler}>Добавить курс</button>
+                <button className="btn btn-outline-secondary" onClick={() => navigate(AUTH_ROUTE, { replace: true })}>К авторизации</button>
+            </div>
         </div>
     )
 }
