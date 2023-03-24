@@ -16,7 +16,7 @@ class MeasureController {
 
             const measureDate = new Date(measure_date).toLocaleDateString().slice(0, 10);
 
-            const course = await Course.findOne({where: {id: courseId}});
+            const course = await Course.findOne({where: {uuid: courseId}});
 
             const startDate = course.start_date;
             const cycle = Math.floor((new Date(getDate(measureDate)) - startDate) / (1000 * 60 * 60 * 24 * 3));
@@ -26,7 +26,7 @@ class MeasureController {
             if (check.length !== 0) {
                 next(ApiError.badRequest(`Запись с циклом ${cycle}, датой измерения ${measureDate} и временем дня ${day_time} уже существует: id=${check.map(({id}) => id)}`))
             } else {
-                const measure = await Measure.create({ measure_date: getDate(measureDate), ph_level, day_time, pill_quantity, courseId, cycle });
+                const measure = await Measure.create({ measure_date: getDate(measureDate), ph_level, day_time, pill_quantity, courseId: course.id, cycle });
                 
                 logWithIP('info', {message: 'CREATE', measure});
                 testSend();

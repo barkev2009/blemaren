@@ -6,7 +6,7 @@ import { createMeasure, removeError } from './../redux/tableSlice';
 import CanvasContainer from './containers/CanvasContainer';
 
 const MeasureInput = memo(
-    ({courseId}) => {
+    () => {
 
         const getDateFormatted = (dateString) => {
             return `${dateString.split('.')[2]}-${dateString.split('.')[1]}-${dateString.split('.')[0]}`
@@ -15,6 +15,7 @@ const MeasureInput = memo(
         const dispatch = useDispatch();
         const rawData = useSelector(state => state.measures.raw);
         const error = useSelector(state => state.measures.error);
+        const courseId = useSelector(state => state.course.course.uuid);
 
         const [measureDate, setMeasureDate] = useState(getDateFormatted(new Date().toLocaleDateString()));
         const [dayTime, setDayTime] = useState(

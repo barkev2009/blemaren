@@ -1,6 +1,7 @@
 import { $host } from "."
 
-export const getCourseAPI = async ({courseId}) => {
+export const getCourseAPI = async (courseId) => {
+    console.log(courseId);
     const { data } = await $host.get(`/api/course/${courseId}`);
     return data
 }

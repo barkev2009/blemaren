@@ -1,6 +1,7 @@
 import {React, useCallback, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { setCourse } from '../redux/courseSlice';
 import { deleteMeasure, getMeasures } from '../redux/tableSlice';
 import MeasureInput from './MeasureInput'
 import MeasureTable from './MeasureTable'
@@ -19,7 +20,9 @@ const Main = () => {
 
     const initialGetMeasures = useCallback(
         () => {
-          dispatch(getMeasures(params.id))
+          // console.log(params.id);
+          dispatch(getMeasures(params.id));
+          dispatch(setCourse(params.id));
         }, [dispatch, params.id]
       )
   

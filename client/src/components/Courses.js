@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getCoursesByLogin } from '../redux/courseSlice';
+import { getCoursesByLogin, setCourse } from '../redux/courseSlice';
 import CourseContainer from './containers/CourseContainer';
 
 const Courses = () => {
