@@ -35,7 +35,7 @@ const courseSlice = createSlice({
         );
         builder.addCase(
             createCourse.fulfilled, (state, action) => {
-                state.courses.push(action.payload);
+                state.courses.push(action.payload.course);
             }  
         );
         builder.addCase(
