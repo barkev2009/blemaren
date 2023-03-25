@@ -9,15 +9,19 @@ const Courses = () => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.app.user);
+    const isAuth = useSelector(state => state.app.isAuth);
     const courses = useSelector(state => state.course.courses);
     const navigate = useNavigate();
 
     useEffect(
         () => {
+            if (!isAuth) {
+                navigate(AUTH_ROUTE, {replace: true})
+            }
             if (!!user.login) {
                 dispatch(getCoursesByLogin(user.login));
             }
-        }, [user, dispatch]
+        }, [user, dispatch, isAuth, navigate]
     );
 
     const clickHandler = () => {
