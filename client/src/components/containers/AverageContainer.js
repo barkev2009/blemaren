@@ -22,10 +22,10 @@ const AverageContainer = memo(
         const avg_evening_pills = (evening_pills.reduce((a, b) => a + b, 0) / evening_pills.length).toFixed(1);
 
         const iconHandler = (phValue) => {
-            if (phValue < 6.8) {
+            if (phValue < process.env.REACT_APP_LIMIT_LOW) {
                 return <i className="bi bi-arrow-up-circle-fill text-warning" style={{ fontSize: '1.5rem' }}></i>
             }
-            if (phValue > 7.2) {
+            if (phValue > process.env.REACT_APP_LIMIT_HIGH) {
                 return <i className="bi bi-arrow-down-circle-fill text-warning" style={{ fontSize: '1.5rem' }}></i>
             }
             return <i className="bi bi-check-circle-fill text-success" style={{ fontSize: '1.5rem' }}></i>

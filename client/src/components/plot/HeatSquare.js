@@ -10,35 +10,35 @@ const HeatSquare = ({ rawItem }) => {
     const dispatch = useDispatch();
 
     const colorHandler = () => {
-        if (rawItem.ph_level >= 6.8 && rawItem.ph_level <= 7.2) {
+        if (rawItem.ph_level >= process.env.REACT_APP_LIMIT_LOW && rawItem.ph_level <= process.env.REACT_APP_LIMIT_HIGH) {
             return '#00800080'; // green
         }
         switch (rawItem.ph_level) {
-            case 7.5:
+            case process.env.REACT_APP_LIMIT_HIGH + 0.3:
                 return '#021f02';
-            case 7.4:
+            case process.env.REACT_APP_LIMIT_HIGH + 0.2:
                 return '#032b03';
-            case 7.3:
+            case process.env.REACT_APP_LIMIT_HIGH + 0.1:
                 return '#053705';
-            case 6.7:
+            case process.env.REACT_APP_LIMIT_LOW - 0.1:
                 return '#3d4909';
-            case 6.6:
+            case process.env.REACT_APP_LIMIT_LOW - 0.2:
                 return '#4c580b';
-            case 6.5:
+            case process.env.REACT_APP_LIMIT_LOW - 0.3:
                 return '#61710a';
-            case 6.4:
+            case process.env.REACT_APP_LIMIT_LOW - 0.4:
                 return '#80750a';
-            case 6.3:
+            case process.env.REACT_APP_LIMIT_LOW - 0.5:
                 return '#a19306';
-            case 6.2:
+            case process.env.REACT_APP_LIMIT_LOW - 0.6:
                 return '#a17f06';
-            case 6.1:
+            case process.env.REACT_APP_LIMIT_LOW - 0.7:
                 return '#a16506';
-            case 6:
+            case process.env.REACT_APP_LIMIT_LOW - 0.8:
                 return '#a13b06';
-            case 5.9:
+            case process.env.REACT_APP_LIMIT_LOW - 0.9:
                 return '#a10606';
-            case 5.8:
+            case process.env.REACT_APP_LIMIT_LOW - 1:
                 return '#6e0000';
             default:
                 return '#520101'; // red
@@ -66,7 +66,7 @@ const HeatSquare = ({ rawItem }) => {
             style={{ backgroundColor: colorHandler() }}
         >
             {text}
-            {rawItem.ph_level >= 7 && rawItem.ph_level <= 7.2 && <i className="bi bi-bookmark-check"></i>}
+            {rawItem.ph_level >= process.env.REACT_APP_LIMIT_LOW && rawItem.ph_level <= process.env.REACT_APP_LIMIT_HIGH && <i className="bi bi-bookmark-check"></i>}
         </div>
     )
 }
