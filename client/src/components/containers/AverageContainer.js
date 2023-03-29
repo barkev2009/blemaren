@@ -22,7 +22,7 @@ const AverageContainer = memo(
         const avg_evening_pills = (evening_pills.reduce((a, b) => a + b, 0) / evening_pills.length).toFixed(1);
 
         const iconHandler = (phValue) => {
-            if (phValue < 7) {
+            if (phValue < 6.8) {
                 return <i className="bi bi-arrow-up-circle-fill text-warning" style={{ fontSize: '1.5rem' }}></i>
             }
             if (phValue > 7.2) {

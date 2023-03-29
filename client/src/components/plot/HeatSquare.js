@@ -10,7 +10,7 @@ const HeatSquare = ({ rawItem }) => {
     const dispatch = useDispatch();
 
     const colorHandler = () => {
-        if (rawItem.ph_level >= 7 && rawItem.ph_level <= 7.2) {
+        if (rawItem.ph_level >= 6.8 && rawItem.ph_level <= 7.2) {
             return '#00800080'; // green
         }
         switch (rawItem.ph_level) {
@@ -20,25 +20,25 @@ const HeatSquare = ({ rawItem }) => {
                 return '#032b03';
             case 7.3:
                 return '#053705';
-            case 6.9:
-                return '#3d4909';
-            case 6.8:
-                return '#4c580b';
             case 6.7:
-                return '#61710a';
+                return '#3d4909';
             case 6.6:
-                return '#80750a';
+                return '#4c580b';
             case 6.5:
-                return '#a19306';
+                return '#61710a';
             case 6.4:
-                return '#a17f06';
+                return '#80750a';
             case 6.3:
-                return '#a16506';
+                return '#a19306';
             case 6.2:
-                return '#a13b06';
+                return '#a17f06';
             case 6.1:
-                return '#a10606';
+                return '#a16506';
             case 6:
+                return '#a13b06';
+            case 5.9:
+                return '#a10606';
+            case 5.8:
                 return '#6e0000';
             default:
                 return '#520101'; // red
