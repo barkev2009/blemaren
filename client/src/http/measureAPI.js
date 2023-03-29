@@ -1,4 +1,4 @@
-import { $authHost, $host } from "."
+import { $authHost } from "."
 
 export const getMeasuresAPI = async (courseId) => {
     const { data } = await $authHost.get('/api/measure/', { params: { courseId } });

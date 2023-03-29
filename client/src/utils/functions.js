@@ -38,3 +38,5 @@ export const defineDuration = (milisecs) => {
       }
     }
   }
+
+  export const safe_calc = (sum) => Number(sum.toFixed(1));

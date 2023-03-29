@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { deleteCourse, setCourse } from '../../redux/courseSlice';
+import { deleteCourse } from '../../redux/courseSlice';
 import { MAIN_ROUTE } from '../../utils/consts';
 import Modal from './Modal';
 
