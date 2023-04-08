@@ -7,5 +7,6 @@ node_modules*
 */logs/*.log*
 
 /server/backup/*
+/server/config/config.json
 
 *.bkp
