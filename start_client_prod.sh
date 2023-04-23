@@ -4,4 +4,4 @@ cd client
 echo "Installing client dependencies..."
 npm i
 npm run build
-nohup serve -s build &
+nohup serve -s build -l 3000 &

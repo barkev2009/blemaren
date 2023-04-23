@@ -21,9 +21,6 @@ log4js.configure(
     }
 )
 
-// class MyLogger extends log4js.logger {
-
-// }
 
 const logger = log4js.getLogger('server');
 
